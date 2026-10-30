@@ -1,0 +1,681 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>tuprofeluis · Luis Fernández Oliva</title>
+<link rel="alternate" hreflang="en" href="../tuprofeluis.html">
+<link rel="alternate" hreflang="es" href="../es/tuprofeluis.html">
+<link rel="alternate" hreflang="it" href="../it/tuprofeluis.html">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Funnel+Sans:wght@300..800&display=swap">
+<style>
+/* Oliva come colore del marchio */
+:root{
+  --cream:#F7F1E8; --paper:#FFFDF9; --sand:#ECE4D6; --line:#DDD5C4;
+  --ink:#22241C; --mut:#5C5F50; --dim:#7E8073;
+  --olive:#4F5E24; --olive-deep:#353F17; --olive-tint:#E2E3CC;
+  --on-deep-dim:#8F976C; --on-deep-text:#A3AA86;
+  --fd:"Funnel Display",system-ui,sans-serif; --fs:"Funnel Sans",system-ui,sans-serif;
+  --cols:12; --g:24px; --m:clamp(20px,4vw,56px); --ease:cubic-bezier(.22,1,.36,1);
+  color-scheme:light;
+}
+@media (max-width:1199px){:root{--cols:8;--g:20px}}
+@media (max-width:767px){:root{--cols:4;--g:16px;--m:16px}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--cream);color:var(--ink);font:400 18px/1.6 var(--fs);margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--cream)}
+/* le foto non vengono mai ritagliate: larghezza della colonna, altezza dalla proporzione reale */
+img{display:block;max-width:100%;width:100%;height:auto}
+figure{margin:0}
+.label{font:600 12px/1.4 var(--fs);letter-spacing:.14em;text-transform:uppercase;color:var(--mut)}
+.pad{padding-left:max(var(--m),env(safe-area-inset-left,0px));padding-right:max(var(--m),env(safe-area-inset-right,0px))}
+.g{display:grid;grid-template-columns:repeat(var(--cols),minmax(0,1fr));column-gap:var(--g);max-width:1480px;margin:0 auto}
+.c{grid-column:var(--s,1/-1);min-width:0}
+@media (max-width:1199px){.c{grid-column:var(--st,1/-1)}}
+@media (max-width:767px){.c{grid-column:var(--sm,1/-1)}}
+a:focus-visible,button:focus-visible,input:focus-visible+span{outline:2px solid currentColor;outline-offset:4px}
+
+/* intestazione */
+.dnav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--cream);border-bottom:1px solid var(--line)}
+.dnav .in{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-block:16px;max-width:1480px;margin:0 auto;position:relative}
+.dnav ul{display:flex;gap:22px;list-style:none;margin:0;padding:0;font:600 15px var(--fs);align-items:center}
+.dnav ul a{color:var(--ink);text-decoration:none}
+.dnav ul a:hover{text-decoration:underline;text-underline-offset:5px}
+.dname{font:800 19px/1.2 var(--fd);letter-spacing:-.02em;color:var(--ink);text-decoration:none;display:inline-flex;white-space:nowrap}
+.dname .r,.dname .dot{display:inline-block;overflow:hidden;white-space:pre;vertical-align:bottom;transition:max-width .7s var(--ease),opacity .45s ease}
+.dname .r{max-width:0;opacity:0}.dname .dot{max-width:1ch}
+.dname.full .r{max-width:var(--w,10ch);opacity:1}.dname.full .dot{max-width:0;opacity:0}
+.dname .p:nth-child(2) .r{transition-delay:.07s}.dname .p:nth-child(3) .r{transition-delay:.14s}
+@media (max-width:767px){.dnav ul .navlink{display:none}.dname{font-size:17px}}
+
+/* pulsante e pannello "Your pace" */
+.pacewrap{position:relative}
+.pacebtn{display:inline-flex;align-items:center;gap:8px;font:600 15px var(--fs);color:var(--olive);background:none;border:0;padding:6px 0;cursor:pointer}
+.pacebtn::before{content:"";width:8px;height:8px;background:var(--olive);transition:transform .3s var(--ease)}
+.pacebtn[aria-expanded="true"]::before,.pacebtn:hover::before{transform:rotate(45deg)}
+.panel{position:absolute;right:0;top:calc(100% + 14px);width:min(340px,calc(100vw - 32px));background:var(--paper);border:1px solid var(--ink);padding:20px;z-index:25;box-shadow:0 20px 40px -28px rgba(34,36,28,.5)}
+.panel[hidden]{display:none}
+.panel h2{font:800 22px/1 var(--fd);letter-spacing:-.02em;margin:0 0 4px}
+.panel p.intro{margin:0 0 16px;font-size:14px;color:var(--mut)}
+.panel fieldset{border:0;margin:0 0 16px;padding:0}
+.panel legend{font:600 12px var(--fs);letter-spacing:.14em;text-transform:uppercase;color:var(--mut);padding:0;margin-bottom:8px}
+.opt{display:flex;gap:12px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);cursor:pointer;margin-top:-1px;position:relative}
+.opt input{position:absolute;opacity:0;width:1px;height:1px}
+.opt .box{flex:none;width:12px;height:12px;margin-top:6px;border:1.5px solid var(--olive);transition:transform .3s var(--ease),background .2s}
+.opt input:checked~.box{background:var(--olive);transform:rotate(45deg)}
+.opt input:checked~.txt b{color:var(--olive)}
+.opt input:focus-visible~.txt{outline:2px solid var(--ink);outline-offset:3px}
+.opt:has(input:checked){background:var(--olive-tint);border-color:var(--olive);z-index:1}
+.opt .txt{display:grid;font-size:14px;color:var(--mut);line-height:1.4}
+.opt .txt b{font:600 16px var(--fs);color:var(--ink)}
+.seg{display:grid;grid-template-columns:1fr 1fr}
+.seg .opt{margin-top:0;margin-left:-1px;align-items:center}
+.panel .close{font:600 14px var(--fs);background:none;border:0;padding:4px 0;color:var(--ink);text-decoration:underline;text-underline-offset:4px;cursor:pointer}
+
+/* apertura */
+.hero{padding-block:56px 0}
+.dbig{font:800 clamp(56px,11.5vw,184px)/.84 var(--fd);letter-spacing:-.055em;margin:0;transform-origin:left bottom}
+.drole{font:800 clamp(30px,4.4vw,64px)/.92 var(--fd);letter-spacing:-.04em;color:var(--olive);margin:18px 0 0}
+.over{position:relative;z-index:3;grid-row:3;margin-top:56px;align-self:start}
+.blk{grid-row:3;margin-top:220px;position:relative;z-index:1;align-self:start}
+.block{background:var(--olive-deep);color:var(--cream);padding:32px 32px 32px max(32px,22%);display:flex;flex-direction:column;gap:28px;min-height:360px;justify-content:space-between}
+.poet{font:300 clamp(20px,1.9vw,27px)/1.35 var(--fs);margin:0;max-width:30ch}
+.cta{display:inline-flex;align-items:center;gap:10px;font:600 16px var(--fs);color:var(--cream);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px;align-self:start}
+.cta::before{content:"";width:10px;height:10px;background:currentColor;transition:transform .3s var(--ease)}
+.cta:hover::before,.cta:focus-visible::before{transform:rotate(45deg)}
+.cta.ol{color:var(--olive)}
+.cap{font-size:14px;color:var(--mut);margin-top:10px}
+@media (max-width:767px){.over,.blk{grid-row:auto;margin-top:24px}.block{padding-left:28px;min-height:0}}
+
+.sec{margin-top:120px}
+.facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:2px solid var(--olive)}
+@media (max-width:767px){.facts{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.facts div{padding:14px 16px 14px 0;border-bottom:1px solid var(--line);font-size:15px;color:var(--mut)}
+.facts b{display:block;font:800 28px/1.1 var(--fd);letter-spacing:-.02em;color:var(--ink)}
+
+/* in evidenza */
+.feat-h{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:24px}
+.feat-h h2,.idx-h h2{font:800 clamp(34px,4.6vw,64px)/.92 var(--fd);letter-spacing:-.045em;margin:0}
+.card{display:block;color:inherit;text-decoration:none}
+.card figure{overflow:hidden;background:var(--sand)}
+.card img{transition:transform .9s var(--ease)}
+.card:hover img,.card:focus-visible img{transform:scale(1.025)}
+.card .ct{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-top:12px;border-top:1px solid var(--line);padding-top:10px}
+.card .ct b{font:800 clamp(24px,2.4vw,34px)/1 var(--fd);letter-spacing:-.03em}
+.card .ct span{font-size:15px;color:var(--mut)}
+.card:hover .ct b,.card:focus-visible .ct b{color:var(--olive)}
+.reveal{transition:clip-path 1.1s var(--ease)}
+.reveal.pre{clip-path:inset(0 0 100% 0)}
+
+/* fascia oliva */
+.band{background:var(--olive-deep);color:var(--cream);margin-top:140px;padding-block:96px 104px}
+.band .label{color:var(--on-deep-text)}
+.words{list-style:none;margin:0;padding:0}
+.words li{font:800 clamp(48px,9vw,140px)/.9 var(--fd);letter-spacing:-.05em;color:var(--on-deep-dim);transition:color .4s ease}
+.words li.on{color:var(--cream)}
+.words li small{display:block;font:400 18px/1.5 var(--fs);letter-spacing:0;color:var(--on-deep-text);margin:22px 0 64px;max-width:46ch}
+.words li:last-child small{margin-bottom:0}
+.words li.on small{color:var(--cream)}
+
+/* indice: elenco con miniature / griglia */
+.idx-h{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+.views{display:inline-flex;border:1px solid var(--ink)}
+.views button{font:600 14px var(--fs);background:none;border:0;padding:8px 16px;cursor:pointer;color:var(--ink)}
+.views button[aria-pressed="true"]{background:var(--ink);color:var(--cream)}
+.list{list-style:none;margin:0;padding:0;border-top:2px solid var(--olive)}
+.list li{border-bottom:1px solid var(--line)}
+.list a{display:grid;grid-template-columns:72px minmax(0,1.3fr) minmax(0,1fr) minmax(0,1.4fr) 80px;gap:20px;align-items:center;padding:12px 8px;color:inherit;text-decoration:none;transition:background .25s,grid-template-columns .55s var(--ease)}
+.list .th{height:56px;display:flex;align-items:center;justify-content:flex-start;transition:height .55s var(--ease)}
+.list .th img{width:auto;max-width:100%;height:auto;max-height:100%}
+.list .th .ph{width:42px;height:56px;background:var(--sand);display:grid;place-items:center;font:600 9px var(--fs);letter-spacing:.1em;text-transform:uppercase;color:var(--mut);text-align:center}
+.list .nm{font:800 clamp(22px,2.2vw,28px)/1 var(--fd);letter-spacing:-.025em}
+.list .ds,.list .rl{font-size:15px;color:var(--mut)}
+.list .yr{font-size:15px;color:var(--mut);font-variant-numeric:tabular-nums;text-align:right}
+.list a:hover,.list a:focus-visible{background:var(--olive-tint)}
+.list a:hover .nm,.list a:focus-visible .nm{color:var(--olive)}
+@media (hover:hover) and (min-width:901px){.list a:hover,.list a:focus-visible{grid-template-columns:260px minmax(0,1.3fr) minmax(0,1fr) minmax(0,1.4fr) 80px}.list a:hover .th,.list a:focus-visible .th{height:200px}}
+.list a:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+@media (max-width:900px){.list a{grid-template-columns:56px minmax(0,1fr) auto;gap:14px}.list .rl{display:none}.list .ds{grid-column:2;grid-row:2;margin-top:-10px}.list .yr{grid-row:1/3;grid-column:3}.list .th{grid-row:1/3}}
+.gridv{columns:3 260px;column-gap:var(--g)}
+.gridv a{display:block;break-inside:avoid;margin-bottom:28px;color:inherit;text-decoration:none}
+.gridv figure{background:var(--sand);overflow:hidden}
+.gridv img{transition:transform .9s var(--ease)}
+.gridv a:hover img,.gridv a:focus-visible img{transform:scale(1.025)}
+.gridv .ct{display:flex;justify-content:space-between;gap:12px;margin-top:8px;font-size:15px;color:var(--mut)}
+.gridv .ct b{font:800 22px/1.1 var(--fd);letter-spacing:-.02em;color:var(--ink)}
+.gridv a:hover .ct b{color:var(--olive)}
+.gridv .gitem{break-inside:avoid;margin-bottom:28px}
+.gridv .gitem .ct{text-decoration:none}
+.gridv .gitem a.ct:hover b{color:var(--olive)}
+.vid{position:relative;background:var(--sand);overflow:hidden}
+.vid video,.vid img{display:block;width:100%;height:auto}
+.vbtn{position:absolute;right:10px;bottom:10px;display:inline-flex;align-items:center;gap:8px;font:600 13px var(--fs);background:var(--cream);color:var(--ink);border:1px solid var(--ink);padding:6px 10px;cursor:pointer}
+.vbtn::before{content:"";width:8px;height:8px;background:var(--olive)}
+.vbtn[data-state="paused"]::before{transform:rotate(45deg)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.gridv .ph{aspect-ratio:3/4;display:grid;place-items:center;font:600 12px var(--fs);letter-spacing:.14em;text-transform:uppercase;color:var(--mut)}
+
+/* contatti */
+.contact{background:var(--olive-tint);margin-top:140px;padding-block:88px}
+.contact h2{font:800 clamp(44px,8vw,128px)/.88 var(--fd);letter-spacing:-.05em;margin:0}
+.contact h2 span{color:var(--olive)}
+.channels{list-style:none;margin:40px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media (max-width:900px){.channels{grid-template-columns:1fr}}
+.ch{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:16px;align-items:center;width:100%;min-height:96px;text-align:left;
+  font:inherit;color:var(--ink);background:var(--paper);border:1px solid var(--ink);padding:20px 22px;cursor:pointer;text-decoration:none;transition:background .25s,color .25s}
+.ch svg{grid-row:1/3;width:36px;height:36px;color:var(--olive);transition:color .25s}
+.ch b{display:flex;align-items:center;gap:10px;font:800 clamp(24px,2.4vw,32px)/1 var(--fd);letter-spacing:-.03em}
+.ch b::after{content:"";width:9px;height:9px;background:var(--olive);transition:transform .3s var(--ease),background .25s}
+.ch span{font-size:15px;color:var(--mut);margin-top:6px}
+.ch:hover,.ch:focus-visible{background:var(--olive-deep);color:var(--cream)}
+.ch:hover svg,.ch:focus-visible svg{color:var(--cream)}
+.ch:hover span,.ch:focus-visible span{color:var(--on-deep-text)}
+.ch:hover b::after,.ch:focus-visible b::after{transform:rotate(45deg);background:var(--cream)}
+.ch.soon{cursor:default;border-style:dashed;background:transparent}
+.ch.soon:hover{background:transparent;color:var(--ink)}.ch.soon:hover svg{color:var(--olive)}.ch.soon:hover span{color:var(--mut)}
+.ch.soon b::after{display:none}
+.addr{margin-top:18px;font-size:16px;color:var(--mut)}
+.addr code{font:400 16px var(--fs);color:var(--ink);user-select:all;overflow-wrap:anywhere}
+
+/* torna su: quadrato che si riempie */
+.totop{position:fixed;z-index:15;right:max(16px,calc(env(safe-area-inset-right,0px) + 16px));bottom:max(16px,calc(env(safe-area-inset-bottom,0px) + 16px));
+  width:52px;height:52px;padding:0;border:1.5px solid var(--ink);background:var(--cream);cursor:pointer;overflow:hidden;
+  opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity .3s,transform .4s var(--ease)}
+.totop.show{opacity:1;transform:none;pointer-events:auto}
+.totop .fill{position:absolute;left:0;right:0;bottom:0;height:var(--p,0%);background:var(--olive);overflow:hidden}
+.totop svg{position:absolute;left:50%;bottom:0;width:22px;height:52px;margin-left:-11px;color:var(--ink)}
+.totop .fill svg{color:var(--cream)}
+.totop:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
+.totop .tip{position:absolute;right:62px;bottom:14px;white-space:nowrap;font:600 13px var(--fs);background:var(--ink);color:var(--cream);padding:4px 8px;opacity:0;transition:opacity .2s;pointer-events:none}
+.totop:hover .tip,.totop:focus-visible .tip{opacity:1}
+.totop{overflow:visible}.totop .clip{position:absolute;inset:0;overflow:hidden}
+
+/* cursore: mirino fotografico (accompagna il cursore, non lo sostituisce) */
+.vf{position:fixed;left:0;top:0;z-index:60;pointer-events:none;width:var(--vs,30px);height:var(--vs,30px);margin:calc(var(--vs,30px) / -2) 0 0 calc(var(--vs,30px) / -2);
+  color:var(--ink);opacity:0;transition:width .35s var(--ease),height .35s var(--ease),margin .35s var(--ease),opacity .2s,color .2s}
+.vf.on{opacity:1}
+.vf i{position:absolute;width:9px;height:9px;border:0 solid currentColor}
+.vf i:nth-child(1){left:0;top:0;border-left-width:1.5px;border-top-width:1.5px}
+.vf i:nth-child(2){right:0;top:0;border-right-width:1.5px;border-top-width:1.5px}
+.vf i:nth-child(3){left:0;bottom:0;border-left-width:1.5px;border-bottom-width:1.5px}
+.vf i:nth-child(4){right:0;bottom:0;border-right-width:1.5px;border-bottom-width:1.5px}
+.vf .lbl{position:absolute;left:50%;top:calc(100% + 8px);transform:translateX(-50%);font:600 11px var(--fs);letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;opacity:0;transition:opacity .2s}
+.vf.img{--vs:92px}
+.vf.img .lbl{opacity:1}
+.vf.img.focus i{animation:focusin .5s var(--ease)}
+@keyframes focusin{0%{transform:scale(1.35)}100%{transform:none}}
+.vf.link{--vs:20px}
+.vf.dark{color:var(--cream)}
+.vf.img{color:var(--cream)}
+.vf.img .lbl{color:var(--cream);background:var(--ink);padding:3px 8px}
+.vf.img i{width:14px;height:14px;border-color:var(--cream);filter:drop-shadow(0 0 .6px var(--ink)) drop-shadow(0 0 .6px var(--ink)) drop-shadow(0 0 .6px var(--ink))}
+.vf.img i:nth-child(1),.vf.img i:nth-child(3){border-left-width:2px}.vf.img i:nth-child(2),.vf.img i:nth-child(4){border-right-width:2px}
+.vf.img i:nth-child(1),.vf.img i:nth-child(2){border-top-width:2px}.vf.img i:nth-child(3),.vf.img i:nth-child(4){border-bottom-width:2px}
+footer{padding-block:28px 40px;font-size:14px;color:var(--mut)}
+
+html[data-pace="quick"] .deep{display:none}
+/* movimento ridotto: dal sistema o dal pannello */
+html[data-motion="off"]{scroll-behavior:auto}
+html[data-motion="off"] *{transition:none!important}
+html[data-motion="off"] .reveal.pre{clip-path:none}
+html[data-motion="off"] .dbig{transform:none!important;opacity:1!important}
+html[data-motion="off"] .card img,html[data-motion="off"] .gridv img{transform:none!important}
+
+/* ───── case study ───── */
+.back{display:inline-flex;align-items:center;gap:10px;font:600 15px var(--fs);color:var(--olive);text-decoration:underline;text-underline-offset:5px;margin:40px 0 48px}
+.back::before{content:"";width:9px;height:9px;background:var(--olive);transition:transform .3s var(--ease)}
+.back:hover::before{transform:rotate(45deg)}
+.cs-title{font:800 clamp(56px,11vw,176px)/.84 var(--fd);letter-spacing:-.055em;margin:14px 0 0;transform-origin:left bottom;outline:none}
+.cs-lead{font:300 clamp(20px,2vw,28px)/1.35 var(--fs);max-width:34ch;margin:22px 0 0}
+.meta{display:grid;gap:14px;margin:32px 0 0;font-size:16px}
+.meta dt{font:600 12px var(--fs);letter-spacing:.14em;text-transform:uppercase;color:var(--mut)}
+.meta dd{margin:2px 0 0}
+.ext{color:var(--olive);text-decoration:underline;text-underline-offset:4px}
+.cs-hero{margin-top:56px}
+.figcap{font-size:14px;color:var(--mut);margin:10px 0 0}
+.sum{margin-top:72px;border-top:2px solid var(--olive);padding-top:22px;row-gap:24px}
+.sum p{margin:8px 0 0;font:300 clamp(19px,1.6vw,22px)/1.45 var(--fs)}
+.block-s{margin-top:128px;row-gap:28px}
+.block-s h2{font:800 clamp(32px,3.6vw,52px)/.95 var(--fd);letter-spacing:-.04em;margin:0 0 20px;text-wrap:balance}
+.block-s .body p{max-width:64ch;margin:0 0 16px}
+.side .label{position:sticky;top:96px}
+.quote{background:var(--olive-deep);color:var(--cream);margin:128px calc(-1 * max(var(--m),env(safe-area-inset-left,0px))) 0;padding:96px max(var(--m),env(safe-area-inset-left,0px))}
+.quote .label{color:var(--on-deep-text)}
+.quote .big{font:800 clamp(44px,7vw,112px)/.9 var(--fd);letter-spacing:-.05em;margin:18px 0 14px;text-wrap:balance}
+.quote .tr{font:300 clamp(20px,2vw,28px)/1.3 var(--fs);color:var(--on-deep-text);margin:0 0 28px}
+.quote .qtxt{max-width:60ch;margin:0}
+.dec figure,.phone{background:var(--sand);overflow:hidden}
+.dec-t h3,.a11y-h{font:800 clamp(24px,2.4vw,32px)/1 var(--fd);letter-spacing:-.03em;margin:0 0 12px}
+.dec-t p{margin:0 0 12px;max-width:52ch}
+.dec-t{align-self:center}
+.ticks{list-style:none;margin:0;padding:0}
+.ticks li{position:relative;padding:10px 0 10px 26px;border-bottom:1px solid var(--line)}
+.ticks li::before{content:"";position:absolute;left:0;top:19px;width:9px;height:9px;background:var(--olive)}
+.ticks.open li::before{background:none;border:1.5px solid var(--olive)}
+.a11y-h{font-size:22px;margin-top:28px}
+.phone{max-width:300px;border:1px solid var(--line)}
+.cs-facts{margin-top:28px}
+.note{font-size:15px;color:var(--mut);margin-top:18px}
+
+/* falsi amici */
+.ba{background:var(--sand);overflow:hidden;border:1px solid var(--line)}
+.sub3{font:800 clamp(28px,3vw,40px)/1 var(--fd);letter-spacing:-.035em;margin:48px 0 10px}
+.issue{margin-top:20px}
+.issue-t{align-self:center;margin-top:20px}
+.issue-t p{margin:10px 0 0;max-width:44ch}
+.issue-t p:first-of-type{font:300 clamp(19px,1.7vw,24px)/1.35 var(--fs);color:var(--ink)}
+.issue-t .label{display:flex;align-items:center;gap:10px}
+.issue-t .label::before{content:"";width:9px;height:9px;border:1.5px solid var(--olive)}
+.insight{margin-top:48px;border-left:3px solid var(--olive);padding-left:22px}
+.insight p{margin:0;font:300 clamp(19px,1.7vw,24px)/1.45 var(--fs);max-width:56ch}
+.insight b{font-weight:600}
+.figcap b{color:var(--ink);font-weight:600}
+.ff{background:var(--olive-tint);margin:128px calc(-1 * max(var(--m),env(safe-area-inset-left,0px))) 0;padding:88px max(var(--m),env(safe-area-inset-left,0px))}
+.ff h2{font:800 clamp(34px,4.6vw,64px)/.92 var(--fd);letter-spacing:-.045em;margin:12px 0 14px}
+.ffint{max-width:56ch;margin:0 0 32px}
+.cards{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
+@media (max-width:1100px){.cards{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:640px){.cards{grid-template-columns:1fr 1fr}}
+.card-ff{position:relative;display:block;width:100%;aspect-ratio:3/4;border:0;padding:0;background:none;cursor:pointer;font:inherit;color:inherit;text-align:left;text-decoration:none}
+.card-ff .front,.card-ff .bk{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:18px;border:1px solid var(--ink);transition:opacity .45s ease,transform .6s var(--ease)}
+.card-ff .front{background:var(--paper)}
+.card-ff .bk{background:var(--olive-deep);color:var(--cream);opacity:0;transform:translateY(10px);justify-content:flex-end;gap:14px;border-color:var(--olive-deep)}
+.card-ff[aria-expanded="true"] .front{opacity:0}
+.card-ff[aria-expanded="true"] .bk{opacity:1;transform:none}
+.card-ff .w{font:800 clamp(26px,2.6vw,36px)/1 var(--fd);letter-spacing:-.03em;overflow-wrap:anywhere}
+.card-ff .hint{display:inline-flex;align-items:center;gap:8px;font:600 14px var(--fs);color:var(--olive);text-decoration:underline;text-underline-offset:4px}
+.card-ff .hint::before{content:"";width:8px;height:8px;background:var(--olive);transition:transform .3s var(--ease)}
+.card-ff:hover .hint::before,.card-ff:focus-visible .hint::before{transform:rotate(45deg)}
+.card-ff .think{font-size:14px;color:var(--on-deep-text);line-height:1.4}
+.card-ff .real{font-size:15px;line-height:1.4}
+.card-ff .real b,.card-ff .think b{display:block;font:800 22px/1.1 var(--fd);letter-spacing:-.02em;color:var(--cream)}
+.card-ff .think b{color:var(--on-deep-text)}
+.card-ff:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
+.score{margin:18px 0 0;font-size:15px;color:var(--mut);min-height:1.5em}
+html[data-motion="off"] .card-ff .front,html[data-motion="off"] .card-ff .bk{transition:none}
+
+.next{margin-top:140px;border-top:2px solid var(--olive)}
+.next a{display:grid;gap:6px;padding:28px 0 8px;color:var(--ink);text-decoration:none}
+.next .nx{font:800 clamp(52px,10vw,160px)/.86 var(--fd);letter-spacing:-.055em;display:inline-flex;align-items:center;gap:24px}
+.next .nx::after{content:"";width:clamp(18px,2vw,28px);height:clamp(18px,2vw,28px);background:var(--olive);transition:transform .4s var(--ease)}
+.next a:hover .nx{color:var(--olive)}.next a:hover .nx::after{transform:rotate(45deg)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+footer{margin-top:96px}
+
+/* kerning r→n in Fernández (+0.05em) */
+.kr{margin-right:.05em}
+
+/* ───── menu mobile (hamburger) ───── */
+.menuwrap{display:none}
+.menubtn{display:inline-flex;align-items:center;gap:10px;font:600 15px var(--fs);color:var(--ink);background:none;border:0;padding:8px 0 8px 6px;cursor:pointer;min-height:44px}
+.mb-ic{position:relative;width:22px;height:14px;display:inline-block}
+.mb-ic i{position:absolute;left:0;right:0;height:2px;background:var(--ink);transition:transform .35s var(--ease),top .35s var(--ease)}
+.mb-ic i:first-child{top:2px}.mb-ic i:last-child{top:10px}
+.menubtn[aria-expanded="true"] .mb-ic i:first-child{top:6px;transform:rotate(45deg)}
+.menubtn[aria-expanded="true"] .mb-ic i:last-child{top:6px;transform:rotate(-45deg)}
+.menubtn:focus-visible{outline:2px solid var(--olive);outline-offset:3px}
+.mmenu{position:fixed;left:0;right:0;top:var(--hh,64px);bottom:0;z-index:19;background:var(--cream);overflow-y:auto;padding:28px max(16px,env(safe-area-inset-left,0px)) calc(32px + env(safe-area-inset-bottom,0px));border-top:2px solid var(--olive);transform:translateY(0);opacity:1;transition:opacity .3s var(--ease),transform .35s var(--ease)}
+.mmenu[hidden]{display:none}
+.mmenu.closing{opacity:0;transform:translateY(-8px)}
+.mm-main{list-style:none;margin:0 0 36px;padding:0;display:grid;gap:6px}
+.mm-main a{display:inline-flex;align-items:center;gap:16px;font:800 clamp(40px,12vw,64px)/1 var(--fd);letter-spacing:-.045em;color:var(--ink);text-decoration:none;padding:6px 0}
+.mm-main a::after{content:"";width:14px;height:14px;background:var(--olive);transition:transform .3s var(--ease)}
+.mm-main a:hover::after,.mm-main a:focus-visible::after,.mm-main a[aria-current="page"]::after{transform:rotate(45deg)}
+.mm-main a[aria-current="page"]{color:var(--olive)}
+.mm-l{font:600 12px/1.4 var(--fs);letter-spacing:.14em;text-transform:uppercase;color:var(--mut);margin:0 0 10px}
+.mm-proj{list-style:none;margin:0 0 32px;padding:0;display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line)}
+.mm-proj a{display:block;padding:12px 0;border-bottom:1px solid var(--line);font:600 17px var(--fs);color:var(--ink);text-decoration:none}
+.mm-proj li:nth-child(odd) a{margin-right:12px}
+.mm-proj a[aria-current="page"]{color:var(--olive);text-decoration:underline;text-underline-offset:4px}
+.mm-mail{font-size:15px;color:var(--mut);margin:0}
+.mm-mail a{color:var(--olive);text-decoration:underline;text-underline-offset:3px}
+.mmenu a:focus-visible{outline:2px solid var(--olive);outline-offset:3px}
+.mm-pace{border-top:2px solid var(--olive);padding-top:18px;margin:0 0 28px}
+.mm-pace .mm-l{color:var(--olive)}
+.mm-intro{font-size:15px;color:var(--mut);margin:0 0 14px}
+.mm-pace fieldset{border:0;margin:0 0 14px;padding:0}
+.mm-pace legend{font:600 14px var(--fs);margin:0 0 8px;padding:0}
+.mm-seg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mm-seg label{position:relative;display:block;cursor:pointer}
+.mm-seg input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.mm-seg span{display:flex;align-items:center;gap:10px;min-height:48px;padding:10px 12px;border:1px solid var(--ink);background:var(--paper);font:600 15px var(--fs)}
+.mm-seg span::before{content:"";flex:none;width:10px;height:10px;border:1.5px solid var(--olive);transition:transform .3s var(--ease),background .2s}
+.mm-seg input:checked+span{background:var(--olive-deep);color:var(--cream);border-color:var(--olive-deep)}
+.mm-seg input:checked+span::before{background:var(--cream);border-color:var(--cream);transform:rotate(45deg)}
+.mm-seg input:focus-visible+span{outline:2px solid var(--olive);outline-offset:3px}
+@media (max-width:767px){.dnav ul .pacewrap{display:none}}
+html.menu-open{overflow:hidden}
+.dnav .mmenu ul{display:grid;align-items:stretch;font:inherit}
+.dnav .mmenu .mm-main{gap:6px;margin:0 0 40px}
+.dnav .mmenu .mm-proj{gap:0;margin:0 0 28px}
+@media (max-width:767px){.menuwrap{display:block}.dnav ul{gap:16px}}
+html[data-motion="off"] .mmenu,html[data-motion="off"] .mb-ic i,html[data-motion="off"] .mm-main a::after{transition:none}
+
+/* lingua: un solo pulsante che apre le opzioni */
+.langwrap{position:relative}
+.langbtn{display:inline-flex;align-items:center;gap:7px;font:600 15px var(--fs);color:var(--ink);background:none;border:0;padding:6px 0;cursor:pointer}
+.langbtn svg{width:17px;height:17px;transition:transform .4s var(--ease)}
+.langbtn:hover svg,.langbtn[aria-expanded="true"] svg{transform:rotate(-20deg)}
+.langbtn[aria-expanded="true"]{color:var(--olive)}
+.lgp{position:absolute;right:0;top:calc(100% + 14px);min-width:210px;background:var(--paper);border:1px solid var(--ink);padding:8px 0;z-index:26;box-shadow:0 20px 40px -28px rgba(34,36,28,.5)}
+.lgp[hidden]{display:none}
+.lgp .lgt{font:600 12px var(--fs);letter-spacing:.14em;text-transform:uppercase;color:var(--mut);margin:6px 18px 6px}
+.dnav .lgp ul{display:block;list-style:none;margin:0;padding:0}
+.dnav .lgp a{display:flex;align-items:center;gap:12px;padding:10px 18px;color:var(--ink);text-decoration:none;font:600 15px var(--fs)}
+.lgp a::before{content:"";width:8px;height:8px;border:1.5px solid var(--olive);box-sizing:border-box;flex:none}
+.lgp a span{margin-left:auto;color:var(--mut);font-weight:500;font-size:12px;letter-spacing:.12em}
+.dnav .lgp a:hover,.dnav .lgp a:focus-visible{background:var(--sand);text-decoration:none}
+.lgp a[aria-current="page"]{color:var(--olive)}
+.lgp a[aria-current="page"]::before{background:var(--olive)}
+@media (max-width:767px){.dnav ul .langwrap{display:none}}
+.dnav .mmenu .mm-lang{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:0 0 32px;padding:0}
+.mm-lang a{display:inline-block;border:1px solid var(--ink);padding:9px 14px;font:600 15px var(--fs);color:var(--ink);text-decoration:none}
+.mm-lang a[aria-current="page"]{background:var(--ink);color:var(--paper)}
+html[data-motion="off"] .langbtn svg{transition:none}
+</style>
+</head>
+<body>
+<header class="dnav pad">
+  <div class="in">
+    <a class="dname" id="dname" href="index.html" aria-label="Luis Fernández Oliva, inicio"><span aria-hidden="true" style="display:inline-flex"><span class="p"><span class="i">L</span><span class="r">uis </span><span class="dot">.</span></span><span class="p"><span class="i">F</span><span class="r">e<span class="kr">r</span>nández </span><span class="dot">.</span></span><span class="p"><span class="i">O</span><span class="r">liva</span><span class="dot">.</span></span></span></a>
+    <ul>
+      <li class="navlink"><a href="index.html#index">Proyectos</a></li>
+      <li class="navlink"><a href="about.html">Sobre mí</a></li>
+      <li class="navlink"><a href="index.html#contact">Contacto</a></li>
+      <li class="langwrap"><button class="langbtn" type="button" id="langbtn" aria-expanded="false" aria-controls="langpanel"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10" cy="10" r="8"/><path d="M2 10h16M10 2c2.4 2.3 3.6 5 3.6 8s-1.2 5.7-3.6 8c-2.4-2.3-3.6-5-3.6-8s1.2-5.7 3.6-8z"/></svg><span class="sr">Idioma: </span>ES</button><div class="lgp" id="langpanel" hidden><p class="lgt" id="langt">Idioma</p><ul aria-labelledby="langt"><li><a href="../tuprofeluis.html" hreflang="en" lang="en">English<span>EN</span></a></li><li><a href="tuprofeluis.html" hreflang="es" lang="es" aria-current="page">Español<span>ES</span></a></li><li><a href="../it/tuprofeluis.html" hreflang="it" lang="it">Italiano<span>IT</span></a></li></ul></div></li>
+      <li class="pacewrap">
+        <button class="pacebtn" type="button" id="pacebtn" aria-expanded="false" aria-controls="pacepanel">A tu ritmo</button>
+        <div class="panel" id="pacepanel" hidden role="group" aria-labelledby="pacetitle">
+          <h2 id="pacetitle">A tu ritmo</h2>
+          <p class="intro">Lee este portfolio como mejor te venga. Puedes cambiarlo cuando quieras.</p>
+          <fieldset><legend>Lectura</legend>
+            <label class="opt"><input type="radio" name="pace" value="quick" id="pace-quick"><span class="box"></span><span class="txt"><b>Un vistazo</b>El resumen y las imágenes clave.</span></label>
+            <label class="opt"><input type="radio" name="pace" value="deep" id="pace-deep" checked><span class="box"></span><span class="txt"><b>Con calma</b>La historia completa y el proceso.</span></label>
+          </fieldset>
+          <fieldset><legend>Movimiento</legend><div class="seg">
+            <label class="opt"><input type="radio" name="motion" value="on" id="motion-on" checked><span class="box"></span><span class="txt"><b>Sí</b></span></label>
+            <label class="opt"><input type="radio" name="motion" value="off" id="motion-off"><span class="box"></span><span class="txt"><b>No</b></span></label>
+          </div></fieldset>
+          <button class="close" type="button" id="paceclose">Cerrar</button>
+        </div>
+      </li>
+          <li class="menuwrap"><button class="menubtn" type="button" id="menubtn" aria-expanded="false" aria-controls="mmenu"><span class="mb-ic" aria-hidden="true"><i></i><i></i></span><span class="mb-t">Menú</span></button></li>
+    </ul>
+  </div>
+  <nav class="mmenu" id="mmenu" hidden aria-label="Menú principal">
+    <ul class="mm-main"><li><a href="index.html#index">Proyectos</a></li><li><a href="about.html">Sobre mí</a></li><li><a href="index.html#contact">Contacto</a></li></ul>
+    <p class="mm-l">Idioma</p>
+    <ul class="mm-lang" aria-label="Idioma"><li><a href="../tuprofeluis.html" hreflang="en" lang="en">English</a></li><li><a href="tuprofeluis.html" hreflang="es" lang="es" aria-current="page">Español</a></li><li><a href="../it/tuprofeluis.html" hreflang="it" lang="it">Italiano</a></li></ul>
+    <p class="mm-l">Proyectos</p>
+    <ul class="mm-proj"><li><a href="callejera.html">callejera</a></li><li><a href="res.html">R.E.S.</a></li><li><a href="crudo.html">crudo.</a></li><li><a href="argilla.html">argilla</a></li><li><a href="nutrimente.html">nutrimente</a></li><li><a href="tuprofeluis.html" aria-current="page">tuprofeluis</a></li><li><a href="thesis.html">tesis</a></li></ul>
+    <div class="mm-pace">
+      <p class="mm-l" id="mmpt">A tu ritmo</p>
+      <p class="mm-intro">Lee este portfolio como mejor te venga.</p>
+      <fieldset><legend>Lectura</legend><div class="mm-seg">
+        <label><input type="radio" name="mpace" value="quick"><span>Un vistazo</span></label>
+        <label><input type="radio" name="mpace" value="deep"><span>Con calma</span></label>
+      </div></fieldset>
+      <fieldset><legend>Movimiento</legend><div class="mm-seg">
+        <label><input type="radio" name="mmotion" value="on"><span>Sí</span></label>
+        <label><input type="radio" name="mmotion" value="off"><span>No</span></label>
+      </div></fieldset>
+    </div>
+    <p class="mm-mail">Escríbeme a<a href="mailto:luisfernandezoliva.fi@gmail.com">luisfernandezoliva.fi@gmail.com</a></p>
+  </nav>
+</header>
+
+<main id="top">
+  <article class="pad">
+    <div class="g cs-open">
+      <div class="c" style="--s:1/-1"><a class="back" href="index.html#index">Todos los proyectos</a></div>
+      <div class="c" style="--s:1/10;--st:1/-1"><div class="label">Proyecto 06 · Web · 2026</div><h1 class="cs-title" id="dbig" tabindex="-1">tuprofeluis</h1>
+        <p class="cs-lead">Una web para mis clases de español, diseñada alrededor de un miedo: hablar en voz alta un idioma nuevo.</p></div>
+      <div class="c" style="--s:10/13;--st:1/-1;align-self:end"><dl class="meta">
+        <div><dt>Año</dt><dd>2026</dd></div>
+        <div><dt>Rol</dt><dd>UX, diseño UI, desarrollo</dd></div>
+        <div><dt>Tipo</dt><dd>Mi propio negocio de enseñanza</dd></div>
+        <div><dt>En línea</dt><dd><a class="ext" href="https://tuprofeluis.com/" target="_blank" rel="noopener">tuprofeluis.com<span class="sr"> (se abre en una pestaña nueva)</span></a></dd></div>
+      </dl></div>
+      <div class="c cs-hero" style="--s:1/-1">
+        <figure class="vid"><img id="tpvid" src="../img/tuprofeluis-poster.jpg" data-anim="../img/tuprofeluis.webp" data-still="../img/tuprofeluis-poster.jpg" width="2400" height="1336" alt="Grabación de pantalla de la página de inicio de tuprofeluis.com" aria-describedby="tpdesc"><button class="vbtn" type="button" id="tpbtn" aria-label="Pausar el vídeo">Pausa</button>
+          <p class="sr" id="tpdesc">Grabación de pantalla de la página de inicio: el titular El español parece fácil… hasta que lo hablas se escribe letra a letra y luego se abre una ventana de chat con una breve conversación entre un estudiante y Luis.</p></figure>
+        <p class="figcap">Los primeros dieciséis segundos de la página de inicio, grabados en un portátil.</p>
+      </div>
+    </div>
+
+    <!-- sintesi: sempre visibile, anche in Quick look -->
+    <section class="g sum" aria-label="Resumen">
+      <div class="c" style="--s:1/5;--st:1/-1"><div class="label">El problema</div><p>Mi web anterior era una plantilla de Hostinger: correcta, pero anónima. Nadie podía saber quién era yo ni cómo enseño.</p></div>
+      <div class="c" style="--s:5/9;--st:1/-1"><div class="label">El enfoque</div><p>Una web que se comporta como una primera clase: habla español, muestra los errores típicos de los italianos y responde como un compañero, no como un profesor severo.</p></div>
+      <div class="c" style="--s:9/13;--st:1/-1"><div class="label">El resultado</div><p>Más visitas a la página y más personas que escriben para preguntar por las clases.</p></div>
+    </section>
+
+    <section class="g block-s" aria-labelledby="h-context">
+      <div class="c side" style="--s:1/4;--st:1/-1"><div class="label">01 · Antes</div></div>
+      <div class="c body" style="--s:4/11;--st:1/-1"><h2 id="h-context">Una plantilla que podía ser de cualquiera</h2>
+        <p class="deep">La mayoría de mis estudiantes son italianos. El español les resulta cercano, así que entienden mucho desde las primeras semanas. Luego tienen que hablar, y se bloquean. La web anterior no decía nada de esto: una plantilla de Hostinger con una foto genérica de libros de texto, un formulario de contacto y la frase «Descubre mi mundo educativo».</p></div>
+      <div class="c" style="--s:1/8;--st:1/-1">
+        <figure class="ba"><img src="../img/tp-before.jpg" width="2400" height="1169" loading="lazy" alt="La antigua página de inicio: una foto oscura de libros de texto, el titular Descubre mi mundo educativo, un botón Únete y un formulario de contacto de cuatro campos."></figure>
+        <p class="figcap"><b>Antes</b> · la antigua página de inicio, hecha con una plantilla de Hostinger.</p>
+      </div>
+      <div class="c" style="--s:8/13;--st:1/-1">
+        <figure class="ba"><img src="../img/tp-chat.jpg" width="2400" height="1336" loading="lazy" alt="La nueva página de inicio: el titular El español parece fácil… hasta que lo hablas, y una ventana de chat con un estudiante y Luis."></figure>
+        <p class="figcap"><b>Después</b> · la nueva página de inicio, diseñada y programada por mí.</p>
+      </div>
+      <div class="c" style="--s:4/11;--st:1/-1"><h3 class="sub3">Lo que no funcionaba</h3>
+        <p class="deep">Antes de rehacerla, repasé la web antigua sección por sección y anoté lo que fallaba.</p></div>
+
+      <div class="c issue" style="--s:1/8;--st:1/-1"><figure class="ba"><img src="../img/tp-before.jpg" width="2400" height="1169" loading="lazy" alt="Cabecera antigua: una foto oscura de libros de texto, el titular Descubre mi mundo educativo y un formulario de contacto."></figure></div>
+      <div class="c issue-t" style="--s:8/13;--st:1/-1"><div class="label">Inicio</div>
+        <p>En tres segundos no se entendía quién era, qué enseño ni cómo podía ayudarte.</p>
+        <p class="deep">Parecía la landing de un curso online: un formulario que pedía tu número de teléfono antes de darte un motivo para escribir. Ni una cara, ni una voz, solo una foto oscura de libros de texto.</p></div>
+
+      <div class="c issue" style="--s:1/8;--st:1/-1"><figure class="ba"><img src="../img/tp-before-services.jpg" width="2400" height="1142" loading="lazy" alt="Antigua sección de servicios, Mis servicios: dos tarjetas, Materiales educativos y Clases online, con fotos de stock de libros y un portátil."></figure></div>
+      <div class="c issue-t" style="--s:8/13;--st:1/-1"><div class="label">Servicios</div>
+        <p>Dos tarjetas vagas que no decían de verdad lo que ofrezco.</p>
+        <p class="deep">Una de ellas prometía materiales didácticos que todavía no existían: una tarjeta que no se podía pulsar, para algo que no se podía comprar.</p></div>
+
+      <div class="c issue" style="--s:1/8;--st:1/-1"><figure class="ba"><img src="../img/tp-before-about.jpg" width="2400" height="1301" loading="lazy" alt="Antigua página sobre mí, Mi espacio personal: una franja gris con el título y un texto de presentación formal."></figure></div>
+      <div class="c issue-t" style="--s:8/13;--st:1/-1"><div class="label">Sobre mí</div>
+        <p>Formal y distante. No se notaba cómo enseño de verdad, con calidez y con juego.</p>
+        <p class="deep">La página se abría con un título genérico, «Mi espacio personal», y había que bajar para encontrarme.</p></div>
+
+      <div class="c insight" style="--s:4/11;--st:1/-1">
+        <p><b>Faltaba justo lo que me hace diferente:</b> hablo los dos idiomas, así que sé exactamente dónde se atascan los italianos. Eso se convirtió en el centro de la nueva web. Los falsos amigos, el chat y el titular nacen de ahí.</p>
+      </div>
+    </section>
+
+    <section class="quote deep" aria-label="El conflicto">
+      <div class="g"><div class="c" style="--s:1/11;--st:1/-1">
+        <div class="label">02 · Conflicto</div>
+        <p class="big" lang="es">El español parece fácil… hasta que lo hablas.</p>
+        <p class="tr">El titular de la web.</p>
+        <p class="qtxt">El titular nombra el problema que viven mis estudiantes, con sus propias palabras. Es la parte del idioma más difícil de desbloquear, así que la web empieza justo ahí.</p>
+      </div></div>
+    </section>
+
+    <section class="g block-s" aria-labelledby="h-dec">
+      <div class="c side" style="--s:1/4;--st:1/-1"><div class="label">03 · Decisiones</div></div>
+      <div class="c body" style="--s:4/11;--st:1/-1"><h2 id="h-dec">Tres decisiones que hacen que la web parezca una persona</h2></div>
+
+      <div class="c dec" style="--s:1/7;--st:1/-1">
+        <figure><img src="../img/tp-chat.jpg" width="2400" height="1336" loading="lazy" alt="La página de inicio con el chat abierto. Una estudiante escribe: Hola, Luis. Estoy muy embarazada por mi español. Luis responde que probablemente quiere decir me da vergüenza, porque embarazada significa encinta."></figure>
+      </div>
+      <div class="c dec-t" style="--s:8/13;--st:1/-1">
+        <h3>Un chat, no un discurso de venta</h3>
+        <p>Lo primero que encuentras es una conversación. Luis responde como un compañero que te corrige con una sonrisa, no como un profesor distante. El primer intercambio es un error clásico: una estudiante italiana dice <i lang="es">embarazada</i> queriendo decir «avergonzada», y descubre que significa «encinta».</p>
+        <p class="deep">El objetivo es bajar el miedo a hablar antes incluso de que empiece la primera clase.</p>
+      </div>
+
+      <div class="c dec-t" style="--s:1/6;--st:1/-1;grid-row:span 1">
+        <h3>Falsos amigos, por todas partes</h3>
+        <p>Hablo italiano todos los días, así que sé qué palabras del español engañan a los italianos. Una franja de falsos amigos corre bajo la cabecera, con un botón de pausa, y los ejercicios gratuitos profundizan más.</p>
+        <p class="deep">Prueba algunos aquí abajo: son las mismas palabras en las que se equivocan mis estudiantes.</p>
+      </div>
+      <div class="c dec" style="--s:7/13;--st:1/-1">
+        <figure><img src="../img/tp-test.jpg" width="800" height="330" loading="lazy" alt="La sección del test de nivel: ¿Cuál es tu nivel real? Un test anónimo de diez minutos con 20 preguntas, con barras de A1 a C2."></figure>
+      </div>
+      <div class="c dec-t" style="--s:7/13;--st:1/-1">
+        <h3>Un test de nivel antes de la primera llamada</h3>
+        <p>Diez minutos, veinte preguntas, anónimo. Sabes dónde estás antes de hablar conmigo, y la primera clase empieza desde ahí.</p>
+      </div>
+    </section>
+
+    <!-- momento interattivo -->
+    <section class="ff" aria-labelledby="h-ff">
+      <div class="g">
+        <div class="c" style="--s:1/8;--st:1/-1"><div class="label">04 · Pruébalo</div><h2 id="h-ff">¿Acertaría un italiano?</h2>
+          <p class="ffint">Cada tarjeta muestra una palabra en español. Dale la vuelta para ver lo que un italiano cree que significa y lo que significa de verdad.</p></div>
+        <div class="c" style="--s:1/-1"><ul class="cards" id="cards">
+          <li><button type="button" class="card-ff" aria-expanded="false"><span class="front"><span class="w" lang="es">burro</span><span class="hint">Girar</span></span><span class="bk"><span class="think">Un italiano piensa: <b lang="it">burro</b> (mantequilla)</span><span class="real">Significa: <b lang="it">asino</b> (burro, el animal)</span></span></button></li>
+          <li><button type="button" class="card-ff" aria-expanded="false"><span class="front"><span class="w" lang="es">salir</span><span class="hint">Girar</span></span><span class="bk"><span class="think">Un italiano piensa: <b lang="it">salire</b> (subir)</span><span class="real">Significa: <b lang="it">uscire</b> (salir de un sitio)</span></span></button></li>
+          <li><button type="button" class="card-ff" aria-expanded="false"><span class="front"><span class="w" lang="es">embarazada</span><span class="hint">Girar</span></span><span class="bk"><span class="think">Un italiano piensa: <b lang="it">imbarazzata</b> (avergonzada)</span><span class="real">Significa: <b lang="it">incinta</b> (encinta)</span></span></button></li>
+          <li><button type="button" class="card-ff" aria-expanded="false"><span class="front"><span class="w" lang="es">largo</span><span class="hint">Girar</span></span><span class="bk"><span class="think">Un italiano piensa: <b lang="it">largo</b> (ancho)</span><span class="real">Significa: <b lang="it">lungo</b> (largo)</span></span></button></li>
+          <li><button type="button" class="card-ff" aria-expanded="false"><span class="front"><span class="w" lang="es">guardar</span><span class="hint">Girar</span></span><span class="bk"><span class="think">Un italiano piensa: <b lang="it">guardare</b> (mirar)</span><span class="real">Significa: <b lang="it">conservare</b> (conservar)</span></span></button></li>
+        </ul><p class="score" id="score" role="status"></p></div>
+      </div>
+    </section>
+
+    <section class="g block-s deep" aria-labelledby="h-phone">
+      <div class="c side" style="--s:1/4;--st:1/-1"><div class="label">05 · En el móvil</div></div>
+      <div class="c body" style="--s:4/9;--st:1/6"><h2 id="h-phone">La misma voz, en la mano</h2>
+        <p>En el móvil el chat baja debajo del titular, el menú se pliega en un solo botón y los falsos amigos mantienen su control de pausa. La llamada a la acción sigue siendo ancha y fácil de alcanzar con el pulgar.</p>
+        <h3 class="a11y-h">Accesibilidad ya incluida</h3>
+        <ul class="ticks"><li>Un enlace «saltar al contenido»</li><li>Un botón de pausa en la franja móvil de los falsos amigos</li><li>Toda la web en español, italiano e inglés</li></ul></div>
+      <div class="c" style="--s:10/13;--st:6/9"><figure class="phone"><img src="../img/tp-mobile.jpg" width="600" height="992" loading="lazy" alt="La web en un móvil: la llamada a la acción Descubre tu nivel en 10 min, las valoraciones, la franja de falsos amigos y el titular Tres pasos y ya estás hablando."></figure></div>
+    </section>
+
+    <section class="g block-s" aria-labelledby="h-res">
+      <div class="c side" style="--s:1/4;--st:1/-1"><div class="label">06 · Resultado</div></div>
+      <div class="c body" style="--s:4/11;--st:1/-1"><h2 id="h-res">La gente escribe antes de reservar</h2>
+        <p>Desde que la nueva web está en línea, la página tiene más visitas y más personas me contactan para preguntar por las clases. La web hace por mí parte de la primera conversación.</p>
+        <div class="facts cs-facts"><div><b>5,0</b>valoración en Preply</div><div><b>500+</b>horas de clase</div><div><b>A1–C2</b>todos los niveles</div><div><b>3</b>idiomas en la web</div></div>
+        <p class="note deep">Siguiente paso: medir visitas y consultas a lo largo del tiempo, para sustituir las impresiones por números.</p></div>
+    </section>
+
+    <section class="g block-s change" aria-labelledby="h-ch">
+      <div class="c side" style="--s:1/4;--st:1/-1"><div class="label">07 · Qué cambiaría</div></div>
+      <div class="c body" style="--s:4/11;--st:1/-1"><h2 id="h-ch">Volver a mirarla, con ojos nuevos</h2>
+        <ul class="ticks open">
+          <li>El titular y los falsos amigos están escritos dos veces en el código, por la animación. Un lector de pantalla los lee dos veces: deberían leerse una sola.</li>
+          <li>La estrella de «5,0★» se lee como un símbolo. Debería decir «5 de 5 en Preply».</li>
+          <li>La dirección de email es texto plano. Debería ser un enlace, y fácil de copiar.</li>
+          <li>Necesito números reales de visitas y consultas, no solo mi impresión.</li>
+        </ul></div>
+    </section>
+
+    <nav class="g next" aria-label="Siguiente proyecto">
+      <div class="c" style="--s:1/-1"><a href="thesis.html"><span class="label">Siguiente proyecto</span><span class="nx">tesis</span></a></div>
+    </nav>
+  </article>
+
+  <footer class="pad"><div class="g"><div class="c" style="--s:1/7;--st:1/-1">Roma, 2026</div><div class="c" style="--s:7/13;--st:1/-1">Diseñado y programado por Luis Fernández Oliva</div></div></footer>
+</main>
+
+<button class="totop" type="button" id="totop" aria-label="Volver arriba" tabindex="-1" aria-hidden="true">
+  <span class="clip"><svg viewBox="0 0 22 52" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="square" aria-hidden="true"><path d="M11 34V18M5 24l6-6 6 6"/></svg>
+  <span class="fill"><svg viewBox="0 0 22 52" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="square" aria-hidden="true"><path d="M11 34V18M5 24l6-6 6 6"/></svg></span></span>
+  <span class="tip" aria-hidden="true">Volver arriba</span>
+</button>
+<div class="vf" id="vf" aria-hidden="true"><i></i><i></i><i></i><i></i><span class="lbl">Ver</span></div>
+<script>
+(function(){
+  var root=document.documentElement;
+  var sysReduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function motionOff(){return root.dataset.motion==='off'}
+  function store(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+  function read(k){try{return localStorage.getItem(k)}catch(e){return null}}
+  var btn=document.getElementById('pacebtn'),panel=document.getElementById('pacepanel');
+  function openP(o){panel.hidden=!o;btn.setAttribute('aria-expanded',String(o));if(o){(panel.querySelector('input:checked')||panel.querySelector('input')).focus()}}
+  btn.addEventListener('click',function(){openP(panel.hidden)});
+  document.getElementById('paceclose').addEventListener('click',function(){openP(false);btn.focus()});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!panel.hidden){openP(false);btn.focus()}});
+  document.addEventListener('click',function(e){if(!panel.hidden&&!panel.contains(e.target)&&e.target!==btn)openP(false)});
+  var dn=document.getElementById('dname'),big=document.getElementById('dbig'),nav=document.querySelector('.dnav');
+  function measure(){dn.querySelectorAll('.r').forEach(function(r){var mw=r.style.maxWidth;r.style.maxWidth='none';var w=r.scrollWidth;r.style.maxWidth=mw;r.style.setProperty('--w',(w+1)+'px')});}
+  function update(){var nb=nav.getBoundingClientRect().bottom,r=big.getBoundingClientRect();dn.classList.toggle('full',r.bottom<nb+8);}
+  function setPace(p){root.dataset.pace=p;document.getElementById('pace-'+p).checked=true;store('lfo-pace',p);measure();update();}
+  function setMotion(m){root.dataset.motion=m;document.getElementById('motion-'+m).checked=true;store('lfo-motion',m);vsync();}
+  panel.addEventListener('change',function(e){if(e.target.name==='pace')setPace(e.target.value);if(e.target.name==='motion')setMotion(e.target.value);});
+  addEventListener('scroll',update,{passive:true});addEventListener('resize',function(){measure();update()});
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){measure();update()});
+  /* video: animazione WebP (funziona ovunque si vedono le immagini) */
+  var vid=document.getElementById('tpvid'),vb=document.getElementById('tpbtn'),userPaused=false,inView=false,playing=false;
+  (new Image()).src=vid.dataset.anim;
+  function vstate(){vb.textContent=playing?'Pausa':'Play';vb.setAttribute('aria-label',playing?'Pausar el vídeo':'Reproducir el vídeo');vb.dataset.state=playing?'playing':'paused';}
+  function vsync(){var go=inView&&!userPaused&&!motionOff();if(go!==playing){playing=go;vid.src=go?vid.dataset.anim:vid.dataset.still;}vstate();}
+  vb.addEventListener('click',function(){userPaused=playing;if(!playing&&motionOff())userPaused=false;playing=!playing;vid.src=playing?vid.dataset.anim:vid.dataset.still;vstate();});
+  if('IntersectionObserver' in window){new IntersectionObserver(function(es){inView=es[0].isIntersecting;vsync()},{threshold:.4}).observe(vid);}else{inView=true;}
+  panel.addEventListener('change',vsync);
+  vsync();
+  setPace(read('lfo-pace')||'deep');setMotion(read('lfo-motion')||(sysReduce?'off':'on'));
+  /* falsi amici */
+  var cards=[...document.querySelectorAll('.card-ff')],sc=document.getElementById('score');
+  cards.forEach(function(c){c.addEventListener('click',function(){var o=c.getAttribute('aria-expanded')!=='true';c.setAttribute('aria-expanded',String(o));
+    var n=cards.filter(function(x){return x.getAttribute('aria-expanded')==='true'}).length;
+    sc.textContent=n===cards.length?'Las cinco giradas. Son las palabras con las que mis estudiantes se encuentran en la primera clase.':n+' de '+cards.length+' giradas';});});
+  /* torna su */
+  var tt=document.getElementById('totop'),fill=tt.querySelector('.fill');
+  function tprog(){var max=document.documentElement.scrollHeight-innerHeight,y=scrollY,p=max>0?Math.min(1,y/max):0;fill.style.height=(p*100).toFixed(1)+'%';var show=y>innerHeight*.8;tt.classList.toggle('show',show);tt.tabIndex=show?0:-1;tt.setAttribute('aria-hidden',String(!show));}
+  addEventListener('scroll',tprog,{passive:true});addEventListener('resize',tprog);tprog();
+  tt.addEventListener('click',function(){scrollTo({top:0,behavior:motionOff()?'auto':'smooth'});big.focus({preventScroll:true});});
+  /* mirino */
+  var vf=document.getElementById('vf'),fine=window.matchMedia&&matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if(fine){var tx=0,ty=0,cx=0,cy=0,raf=null,last=null;
+    function loop(){cx+=(tx-cx)*.22;cy+=(ty-cy)*.22;vf.style.transform='translate('+cx+'px,'+cy+'px)';raf=(Math.abs(tx-cx)+Math.abs(ty-cy)>.3)?requestAnimationFrame(loop):null;}
+    addEventListener('mousemove',function(e){if(motionOff()){vf.classList.remove('on');return;}
+      tx=e.clientX;ty=e.clientY;if(!vf.classList.contains('on')){cx=tx;cy=ty;}vf.classList.add('on');if(!raf)raf=requestAnimationFrame(loop);
+      var t=e.target,onImg=t.closest&&t.closest('figure img, figure video'),onLink=!onImg&&t.closest&&t.closest('a,button,label,input');
+      var mode=onImg?'img':onLink?'link':'';if(mode!==last){vf.classList.toggle('img',mode==='img');vf.classList.toggle('link',mode==='link');if(mode==='img'){vf.classList.remove('focus');void vf.offsetWidth;vf.classList.add('focus');}last=mode;}
+      vf.classList.toggle('dark',!!(t.closest&&t.closest('.quote,.card-ff[aria-expanded="true"]')));},{passive:true});
+    document.addEventListener('mouseleave',function(){vf.classList.remove('on')});}
+})();
+</script>
+<script>
+/* menu mobile: apre/chiude, Esc, focus, blocco dello scorrimento */
+(function(){var b=document.getElementById('menubtn'),m=document.getElementById('mmenu'),h=document.querySelector('.dnav'),root=document.documentElement;if(!b||!m)return;
+function off(){return root.dataset.motion==='off'}
+function setTop(){m.style.setProperty('--hh',Math.round(h.getBoundingClientRect().bottom)+'px')}
+function open(){setTop();m.hidden=false;m.classList.remove('closing');b.setAttribute('aria-expanded','true');b.querySelector('.mb-t').textContent='Cerrar';root.classList.add('menu-open');var f=m.querySelector('a');if(f)f.focus();}
+function close(back){b.setAttribute('aria-expanded','false');b.querySelector('.mb-t').textContent='Menú';root.classList.remove('menu-open');
+  if(off()){m.hidden=true}else{m.classList.add('closing');setTimeout(function(){if(b.getAttribute('aria-expanded')==='false'){m.hidden=true;m.classList.remove('closing')}},300)}
+  if(back)b.focus();}
+b.addEventListener('click',function(){b.getAttribute('aria-expanded')==='true'?close(false):open()});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!m.hidden){close(true)}
+  if(e.key==='Tab'&&!m.hidden){var as=[b].concat([].slice.call(m.querySelectorAll('a'))),i=as.indexOf(document.activeElement);
+    if(e.shiftKey&&i===0){e.preventDefault();as[as.length-1].focus()}else if(!e.shiftKey&&i===as.length-1){e.preventDefault();as[0].focus()}}});
+m.addEventListener('click',function(e){if(e.target.closest('a'))close(false)});
+addEventListener('resize',function(){if(innerWidth>767&&!m.hidden)close(false);else if(!m.hidden)setTop()});
+})();
+</script>
+<script>
+/* "Your pace" dentro il menu mobile: rispecchia e comanda le scelte del pannello */
+(function(){var m=document.getElementById('mmenu'),root=document.documentElement;if(!m)return;
+function sync(){var p=root.dataset.pace||'deep',mo=root.dataset.motion||'on';
+  m.querySelectorAll('input[name=mpace]').forEach(function(i){i.checked=i.value===p});
+  m.querySelectorAll('input[name=mmotion]').forEach(function(i){i.checked=i.value===mo});}
+m.addEventListener('change',function(e){var t=e.target,map={mpace:'pace',mmotion:'motion'};if(!map[t.name])return;
+  var src=document.getElementById(map[t.name]+'-'+t.value);if(src){src.checked=true;src.dispatchEvent(new Event('change',{bubbles:true}));}});
+document.getElementById('menubtn').addEventListener('click',sync);sync();
+})();
+</script>
+
+
+</body>
+</html>
+
+<script>
+/* lingua: apre/chiude il pannello, Esc, clic fuori, focus */
+(function(){var b=document.getElementById('langbtn'),p=document.getElementById('langpanel');if(!b||!p)return;
+function open(o){p.hidden=!o;b.setAttribute('aria-expanded',String(o));if(o){(p.querySelector('[aria-current]')||p.querySelector('a')).focus()}}
+b.addEventListener('click',function(e){e.stopPropagation();open(p.hidden)});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!p.hidden){open(false);b.focus()}});
+document.addEventListener('click',function(e){if(!p.hidden&&!p.contains(e.target)&&!b.contains(e.target))open(false)});
+p.addEventListener('focusout',function(e){if(!p.hidden&&e.relatedTarget&&!p.contains(e.relatedTarget)&&e.relatedTarget!==b)open(false)});
+})();
+</script>
